@@ -27,9 +27,12 @@ def metrics_plot_multi(vecs, bins=30):
     if vecs.shape[1] == 0:
         raise ValueError("No numeric columns found after coercion.")
 
+    # ترتیب قطعی الفبایی برای ستون‌ها (case-insensitive)
+    ordered_cols = sorted(list(vecs.columns), key=lambda c: str(c).lower())
+
     results = {}
 
-    for col in vecs.columns:
+    for col in ordered_cols:
         data = vecs[col].replace([np.inf, -np.inf], np.nan).dropna().values.astype(float)
 
         if data.size == 0:

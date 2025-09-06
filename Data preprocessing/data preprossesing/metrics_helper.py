@@ -27,6 +27,10 @@ def metrics_plot_multi(vecs, bins=30):
     if vecs.shape[1] == 0:
         raise ValueError("No numeric columns found after coercion.")
 
+    # مرتب‌سازی صرفاً الفبایی (a→z)، بدون اولویت‌دهی به عدد/حرف
+    # نکته: insensitive نسبت به حروف بزرگ/کوچک
+    vecs = vecs.reindex(sorted(vecs.columns, key=lambda c: str(c).lower()), axis=1)
+
     results = {}
 
     for col in vecs.columns:
@@ -74,7 +78,6 @@ def metrics_plot_multi(vecs, bins=30):
         plt.show()
 
     return results
-
 
 def metrics_plot(vecs, column_name=None, bins=30):
     """
